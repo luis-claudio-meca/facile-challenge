@@ -1,11 +1,11 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Encripto from 'App/Models/Encripto';
+import Encryptos from 'App/Models/Encrypto';
 import SchemaEncriptoValidator from 'App/Validators/SchemaEncriptoValidator';
 import Encryption from '@ioc:Adonis/Core/Encryption'
 
 
 
-export default class EncriptosController {
+export default class EncryptosController {
 
   public async index({ }: HttpContextContract) { }
 
@@ -18,12 +18,11 @@ export default class EncriptosController {
 
       const name = request.input('name')
 
-      const encriptoId = await Encripto.create({
+      const encryptoId = await Encryptos.create({
         encriptedName: Encryption.encrypt(name)
       })
 
-      response.send(encriptoId)
-
+      response.send(encryptoId)
 
     } catch (error) {
       response.badRequest(error.messages)
@@ -32,17 +31,22 @@ export default class EncriptosController {
   }
 
   public async show({ request, response }: HttpContextContract) {
-    
-    
+
+
     try {
       const id = request.param('id')
 
-      const encriptoId = await Encripto.findOrFail(id)
+      const encrypto = await Encryptos.findOrFail(id)
 
-      response.send(encriptoId)
+      const descryptoId = {
+        id: encrypto.id,
+        name: Encryption.decrypt(encrypto.encriptedName)
+      }
+
+      response.send(descryptoId)
 
     } catch (error) {
-      response.badRequest(error.messages)
+      response.badRequest({ error: "Id não existe" })
     }
 
   }

@@ -4,4 +4,4 @@ Route.get('/', async () => {
   return { test: 'Faile Challenge' }
 })
 
-Route.resource('encripts', 'EncriptosController')
+Route.resource('encripts', 'EncryptosController')

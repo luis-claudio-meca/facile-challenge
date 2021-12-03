@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Encripto extends BaseModel {
+export default class Encryptos extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
